@@ -59,7 +59,8 @@
 #     auth_methods: %w(publickey password)
 #     # password: 'please use keys'
 #   }
-  
+  set :deploy_to, "/home/arjun/domain/blog" # EDIT folder where files should be deployed to
+  set :stage, :production
   server '52.4.93.80',
   user: 'arjun',
   roles: %w{web app},

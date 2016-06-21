@@ -47,11 +47,12 @@ lock '3.5.0'
 #   end
 
 # end
-set :stage, :production
+# set :stage, :production
 set :application, "Blog"  # EDIT your app name
 set :scm, :git
 set :repo_url,  "git@github.com:lft-arjun/blog.git" # EDIT your git repository
-set :deploy_to, "/home/arjun/domain/blog" # EDIT folder where files should be deployed to
+
+
  
 namespace :deploy do
      
@@ -64,6 +65,12 @@ namespace :deploy do
                 execute :composer, "install --no-dev --quiet" # install dependencies
             	execute :chmod, "u+x artisan" # make artisan executable
             	execute :php, "artisan migrate" # run migrations
+            	if fetch(:stage)== 'staging'
+  					execute :cp, "/home/arjun/.env #{release_path}" # run migrations
+				else
+  					execute :cp, "#{deploy_to}/.env.example  #{release_path}" # run migrations
+				end
+            	
             end
         end
     end
