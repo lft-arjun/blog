@@ -52,8 +52,9 @@ set :application, "Blog"  # EDIT your app name
 set :scm, :git
 set :repo_url,  "git@github.com:lft-arjun/blog.git" # EDIT your git repository
 
+currentStage = "#{fetch(:stage)}";
 
- 
+
 namespace :deploy do
      
     desc "Build"
@@ -65,10 +66,10 @@ namespace :deploy do
                 execute :composer, "install --no-dev --quiet" # install dependencies
             	execute :chmod, "u+x artisan" # make artisan executable
             	execute :php, "artisan migrate" # run migrations
-            	if fetch(:stage)== 'staging'
-  					execute :cp, "/home/arjun/.env #{release_path}" # run migrations
+            	if currentStage == "staging"
+  					execute :cp, "/home/arjun/.env #{release_path}/.env" # run migrations
 				else
-  					execute :cp, "#{deploy_to}/.env.example  #{release_path}" # run migrations
+  					execute :cp, "#{deploy_to}/current/.env.example  #{release_path}/.env" # run migrations
 				end
             	
             end
