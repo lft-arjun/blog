@@ -35,15 +35,49 @@ set :repo_url, 'git@example.com:me/my_repo.git'
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
+# namespace :deploy do
+
+#   after :restart, :clear_cache do
+#     on roles(:web), in: :groups, limit: 3, wait: 10 do
+#       # Here we can do anything such as:
+#       # within release_path do
+#       #   execute :rake, 'cache:clear'
+#       # end
+#     end
+#   end
+
+# end
+
+set :application, "Blog"  # EDIT your app name
+set :repo_url,  "https://github.com/lft-arjun/blog.git" # EDIT your git repository
+set :deploy_to, "/home/arjun/domain/blog" # EDIT folder where files should be deployed to
+ 
 namespace :deploy do
-
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
+     
+    desc "Build"
+    after :updated, :build do
+        on roles(:app) do
+            within release_path  do
+                execute :composer, "install --no-dev --quiet" # install dependencies
+                execute :chmod, "u+x artisan" # make artisan executable
+                execute :composer, "install --no-dev --quiet" # install dependencies
+            	execute :chmod, "u+x artisan" # make artisan executable
+            	execute :php, "artisan migrate" # run migrations
+            end
+        end
     end
-  end
-
+ 
+    desc "Restart"
+    task :restart do
+        on roles(:app) do
+            within release_path  do
+                execute :chmod, "-R 777 app/storage/cache"
+                execute :chmod, "-R 777 app/storage/logs"
+                execute :chmod, "-R 777 app/storage/meta"
+                execute :chmod, "-R 777 app/storage/sessions"
+                execute :chmod, "-R 777 app/storage/views"
+            end
+        end
+    end
+ 
 end
