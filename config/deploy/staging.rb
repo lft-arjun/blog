@@ -59,10 +59,13 @@
 #     auth_methods: %w(publickey password)
 #     # password: 'please use keys'
 #   }
-role :app, %w{arjun@54.175.156.68} # EDIT your ssh username and server ip address 
- 
-set :ssh_options, {
-    keys: %w("../../../../../../../home/linux/Documents/linkway/Credientials/
-arjun.pem"), # EDIT your ssh key
-    auth_methods: %w(publickey)
-}
+server '52.4.93.80',
+  user: 'arjun',
+  roles: %w{web app},
+  ssh_options: {
+    user: 'arjun', # overrides user setting above
+    keys: %w(/home/linux/.ssh/arjun.pem),
+    forward_agent: false,
+    auth_methods: %w(publickey),
+    port: 2073
+  }

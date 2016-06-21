@@ -1,8 +1,8 @@
 # config valid only for current version of Capistrano
 lock '3.5.0'
 
-set :application, 'my_app_name'
-set :repo_url, 'git@example.com:me/my_repo.git'
+#set :application, 'my_app_name'
+#set :repo_url, 'git@example.com:me/my_repo.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -47,9 +47,10 @@ set :repo_url, 'git@example.com:me/my_repo.git'
 #   end
 
 # end
-
+set :stage, :production
 set :application, "Blog"  # EDIT your app name
-set :repo_url,  "https://github.com/lft-arjun/blog.git" # EDIT your git repository
+set :scm, :git
+set :repo_url,  "git@github.com:lft-arjun/blog.git" # EDIT your git repository
 set :deploy_to, "/home/arjun/domain/blog" # EDIT folder where files should be deployed to
  
 namespace :deploy do

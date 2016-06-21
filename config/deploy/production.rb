@@ -59,3 +59,14 @@
 #     auth_methods: %w(publickey password)
 #     # password: 'please use keys'
 #   }
+  
+  server '52.4.93.80',
+  user: 'arjun',
+  roles: %w{web app},
+  ssh_options: {
+    user: 'arjun', # overrides user setting above
+    keys: %w(/home/linux/.ssh/arjun.pem),
+    forward_agent: false,
+    auth_methods: %w(publickey),
+    port: 2073
+  }
