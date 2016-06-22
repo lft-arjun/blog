@@ -65,12 +65,12 @@ namespace :deploy do
                 execute :chmod, "u+x artisan" # make artisan executable
                 execute :composer, "install --no-dev --quiet" # install dependencies
             	execute :chmod, "u+x artisan" # make artisan executable
-            	execute :php, "artisan migrate" # run migrations
             	if currentStage == "staging"
-  					execute :cp, "/home/arjun/.env #{release_path}/.env" # run migrations
+  					execute :cp, "#{deploy_to}/current/.env.staging #{release_path}/.env" # run migrations
 				else
   					execute :cp, "#{deploy_to}/current/.env.example  #{release_path}/.env" # run migrations
 				end
+            	execute :php, "artisan migrate" # run migrations
             	
             end
         end
