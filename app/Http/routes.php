@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::group(['prefix' => 'api/v1'], function () {
+    Route::get('users', ['as'=> 'userall', 'uses' => 'UserController@allUser']);
+    Route::get('user/{id}/detail', ['as'=> 'userdetail', 'uses' => 'UserController@show']);
+});
