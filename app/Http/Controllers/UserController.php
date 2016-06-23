@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Requests\StoreUserPostRequest;
 
 class UserController extends Controller
 {
@@ -29,6 +30,20 @@ class UserController extends Controller
      */
     public function show($id)
     {
-    	return $this->response()->json(['id'=> 1, 'name' => 'arju ']);
+    	$user = DB::table('users')->find($id);
+    	return $this->response()->json($user->toArray());
+    }
+
+    /**
+     * Edit User By Id
+     *
+     * Edit the user with form post value
+     * 
+     * @param int $id userId
+     * @return json {userid, status}
+     */
+    public function edit(StoreUserPostRequest $userPostRequest, $id)
+    {
+
     }
 }

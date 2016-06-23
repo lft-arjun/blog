@@ -19,3 +19,6 @@ Route::group(['prefix' => 'api/v1'], function () {
     Route::get('users', ['as'=> 'userall', 'uses' => 'UserController@allUser']);
     Route::get('user/{id}/detail', ['as'=> 'userdetail', 'uses' => 'UserController@show']);
 });
+
+ Route::post('user/{id}/edit', ['as'=> 'useredit', 'uses' => 'UserController@edit']);
+   
